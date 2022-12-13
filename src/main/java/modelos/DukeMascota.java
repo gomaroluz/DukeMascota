@@ -2,8 +2,10 @@ package main.java.modelos;
 
 public class DukeMascota extends Mascota{
 		
+	private static int count;
 	public DukeMascota(String nombre, String propietario) {
 		super(nombre, propietario);
+		this.id = ++count;
 	}
 	
 	 @Override

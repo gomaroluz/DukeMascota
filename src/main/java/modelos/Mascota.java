@@ -14,6 +14,7 @@ public class Mascota {
 	protected int nivelFelicidad;
 	protected int nivelAburrimiento;
 	protected String propietario;
+	protected int id;
 	
 	
 	public Mascota(String nombre, String propietario) {
