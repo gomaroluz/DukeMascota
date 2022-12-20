@@ -1,5 +1,6 @@
 package main.java;
 
+import main.java.enumeradores.AlmacenAlimentos;
 import main.java.modelos.DukeMascota;
 import main.java.modelos.Mascota;
 import main.java.persistencia.persistenceCollections.MascotaPersistenceUseList;
@@ -33,10 +34,9 @@ public class Main {
 		    persistence.guardar(duke3);
 		    persistence.guardar(duke4);
 		    
-		    for(Mascota mascota : persistence.getAllMascotas()) {
-		    	System.out.println(mascota.getNombre());
-		      }
-
+		    System.out.println("antes de comer" + duke.getNivelEnergia());
+		    duke.comer(AlmacenAlimentos.ASADO);
+		    System.out.println("después de comer " + duke.getNivelEnergia());
 	}
 
 }

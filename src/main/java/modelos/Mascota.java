@@ -3,6 +3,9 @@ package main.java.modelos;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import main.java.acciones.Alimentarse;
+import main.java.enumeradores.AlmacenAlimentos;
+
 public class Mascota {
 	protected String nombre;
 	protected LocalDateTime fechaNacimiento;
@@ -15,6 +18,7 @@ public class Mascota {
 	protected int nivelAburrimiento;
 	protected String propietario;
 	protected int id;
+	protected Alimentarse alimentarse;
 	
 	
 	public Mascota(String nombre, String propietario) {
@@ -26,9 +30,10 @@ public class Mascota {
 		setNivelCansancio((int) (Math.random() * 100));
 		setNivelFelicidad((int) (Math.random() * 100));
 		setNivelAburrimiento((int) (Math.random() * 100));
-		setFechaNacimiento(LocalDateTime.now());			
+		setFechaNacimiento(LocalDateTime.now());
+		this.alimentarse = new Alimentarse();
+		
 	}	
-	
 	
 	
 	
@@ -56,8 +61,8 @@ public class Mascota {
 
 
 
-	private void setNivelEnergia(int nivelEnergia) {
-		this.nivelEnergia = nivelEnergia;
+	public void setNivelEnergia(int nivelEnergia) {
+		this.nivelEnergia = Math.min(Math.max(nivelEnergia, 0), 100);
 	}
 
 
@@ -150,8 +155,8 @@ public class Mascota {
 		return propietario;
 	}
 
-	public void comer() {
-		
+	public void comer(AlmacenAlimentos alimento) {
+		alimentarse.ingerirAlimento(alimento, this);
 	}
 	
 
