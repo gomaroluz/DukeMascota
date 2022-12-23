@@ -6,4 +6,5 @@
  *
  */
 module MascotaVirtual2 {
+	requires java.sql;
 }

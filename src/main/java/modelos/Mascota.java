@@ -1,9 +1,8 @@
 package main.java.modelos;
 
-
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import main.java.acciones.Alimentarse;
 import main.java.acciones.Divertirse;
@@ -11,6 +10,7 @@ import main.java.acciones.Dormir;
 import main.java.acciones.HacerPopo;
 import main.java.enumeradores.AlmacenAlimentos;
 import main.java.enumeradores.EntretenimientosEnum;
+import main.java.utils.actas.RegistroCivilMascotas;
 
 public class Mascota {
 	protected String nombre;
@@ -30,27 +30,34 @@ public class Mascota {
 	protected Dormir descansar;
 	protected int comidasIngeridas;
 	protected HacerPopo popo;
-	
-	
-	
-	
+	protected ArrayList<String> causaDeMuerte = new ArrayList<>();
+	protected String actaDefuncion;
+	protected String actaNacimiento;
+
+	public Mascota() {
+	}
+
+	public ArrayList<String> getCausaDeMuerte() {
+		return causaDeMuerte;
+	}
+
+	public void setCausaDeMuerte(String causaDeMuerte) {
+		this.causaDeMuerte.add(causaDeMuerte);
+	}
+
 	public int getComidasIngeridas() {
 		return comidasIngeridas;
 	}
-
-
 
 	public void setComidasIngeridas(int comidasIngeridas) {
 		this.comidasIngeridas = comidasIngeridas;
 	}
 
-
-
 	public Mascota(String nombre, String propietario) {
 		setNombre(nombre);
 		setPropietario(propietario);
 		setLive(true);
-		setNivelEnergia(20); 
+		setNivelEnergia(20);
 		setNivelHambre((int) (Math.random() * 100));
 		setNivelCansancio((int) (Math.random() * 100));
 		setNivelFelicidad((int) (Math.random() * 100));
@@ -60,168 +67,129 @@ public class Mascota {
 		this.divertirse = new Divertirse();
 		this.descansar = new Dormir();
 		this.popo = new HacerPopo();
-				
-		
-		
-	}	
-	
-	
-	
+		RegistroCivilMascotas.confeccionarActa(this);
+
+	}
+
+	public String getActaDefuncion() {
+		return actaDefuncion;
+	}
+
+	public void setActaDefuncion(String actaDefuncion) {
+		this.actaDefuncion = actaDefuncion;
+	}
+
+	public String getActaNacimiento() {
+		return actaNacimiento;
+	}
+
+	public void setActaNacimiento(String actaNacimiento) {
+		this.actaNacimiento = actaNacimiento;
+	}
+
 	public HacerPopo getPopo() {
 		return popo;
 	}
-
-
 
 	public void setPopo(HacerPopo popo) {
 		this.popo = popo;
 	}
 
-
-
 	public int getId() {
 		return id;
 	}
-
-
 
 	public Alimentarse getAlimentarse() {
 		return alimentarse;
 	}
 
-
-
 	public Divertirse getDivertirse() {
 		return divertirse;
 	}
-
-
 
 	public static LocalDateTime getUltimoDescanso() {
 		return ultimoDescanso;
 	}
 
-
-
 	public Dormir getDescansar() {
 		return descansar;
 	}
 
-
-
-	private void setNombre(String nombre) {
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
-
-	private void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+	public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-
-
-	private void setFechaMuerte(LocalDateTime fechaMuerte) {
+	public void setFechaMuerte(LocalDateTime fechaMuerte) {
 		this.fechaMuerte = fechaMuerte;
 	}
 
-
-
-	private void setLive(boolean isLive) {
+	public void setLive(boolean isLive) {
 		this.isLive = isLive;
 	}
-
-
 
 	public void setNivelEnergia(int nivelEnergia) {
 		this.nivelEnergia = Math.min(Math.max(nivelEnergia, 0), 100);
 	}
 
-
-
 	public void setNivelHambre(int nivelHambre) {
 		this.nivelHambre = Math.min(Math.max(nivelHambre, 0), 100);
 	}
-
-
 
 	private void setNivelCansancio(int nivelCansancio) {
 		this.nivelCansancio = nivelCansancio;
 	}
 
-
-
 	private void setNivelFelicidad(int nivelFelicidad) {
 		this.nivelFelicidad = nivelFelicidad;
 	}
-
-
 
 	public void setNivelAburrimiento(int nivelAburrimiento) {
 		this.nivelAburrimiento = Math.max(nivelAburrimiento, 0);
 	}
 
-
-
 	private void setPropietario(String propietario) {
 		this.propietario = propietario;
 	}
-
-
 
 	public String getNombre() {
 		return nombre;
 	}
 
-
-
 	public LocalDateTime getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-
-
 
 	public LocalDateTime getFechaMuerte() {
 		return fechaMuerte;
 	}
 
-
-
 	public boolean isLive() {
 		return isLive;
 	}
-
-
 
 	public int getNivelEnergia() {
 		return nivelEnergia;
 	}
 
-
-
 	public int getNivelHambre() {
 		return nivelHambre;
 	}
-
-
 
 	public int getNivelCansancio() {
 		return nivelCansancio;
 	}
 
-
-
 	public int getNivelFelicidad() {
 		return nivelFelicidad;
 	}
 
-
-
 	public int getNivelAburrimiento() {
 		return nivelAburrimiento;
 	}
-
-
 
 	public String getPropietario() {
 		return propietario;
@@ -230,20 +198,24 @@ public class Mascota {
 	public void comer(AlmacenAlimentos alimento) {
 		alimentarse.ingerirAlimento(alimento, this);
 	}
-	
 
 	public void dormir(LocalTime tiempo) {
 		descansar.hacerDormir(tiempo, this);
-		
+
 	}
-	
+
 	public void jugar(EntretenimientosEnum entretenimiento) {
-		    divertirse.entretenerseCon(entretenimiento, this);
-		  }
-	
-	
+		divertirse.entretenerseCon(entretenimiento, this);
+	}
+
 	public void irAlBaño() {
-	    popo.evacuar(this);
-	  }
-	
+		popo.evacuar(this);
+	}
+
+	 public void setId(int id) {
+		    this.id = id;
+	}
+
+	 
+
 }
